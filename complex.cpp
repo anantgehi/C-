@@ -1,4 +1,7 @@
 #include<iostream>
+#include<new>
+#include<exception>
+
 #include"complex.h"
 
 using namespace std;
@@ -27,9 +30,39 @@ Complex::Complex(int real,int imag)
 	mycounter++;
 }
 
+Complex Complex::operator+(const Complex& cc)
+{
+	cout << "Add function called" << endl;
+	return Complex(real+cc.real,imag+cc.imag);
+}
+
+Complex& Complex::operator++()
+{
+	cout << "Pre increment called" << endl;
+	++real;
+	++imag;
+	return *this;
+}
+
+Complex Complex::operator++(int)
+{
+	cout << "Post increment called" << endl;
+	Complex temp = *this;
+	this->real++;
+	this->imag++;
+	return temp;
+}
+
+bool Complex::operator==(const Complex&cc)
+{
+	cout << "Operator == called" << endl;
+	return real == cc.real && imag == cc.imag ? true : false;
+}
+
 void Complex::display()const 
 {
-	//const_cast<Complex* const>(this)->real=9999;//use const_cast to remove constantness of constant pointer
+	//const_cast<Complex* const>(this)->real=9999;
+	//use const_cast to remove constantness of constant pointer
 	//imag = 99999; //could be modified if declared mutable
 	cout << this->real << " " << (*this).imag << endl;
 	//cout << this << endl;
@@ -47,6 +80,45 @@ void Complex::count_objects()
 	//Note: nonstatic data member cannot be accessed inside static member functions
 	//Note: There is no this pointer within static member functions!
 	//Note: static functions can access only static data members and global variables
+}
+
+void* Complex::operator new(size_t size)
+{
+	cout << "Operator new called" << endl;
+	void* ptr=nullptr;
+	ptr = (int*)malloc(sizeof(size));
+	//ptr = nullptr;
+	if (ptr == nullptr)
+	{
+		bad_alloc b1;
+		throw b1;
+	}
+	return ptr;
+}
+void Complex::operator delete(void* ptr, size_t size)
+{
+	cout << "delete operator called" << endl;
+	free(ptr);
+}
+void* Complex::operator new[] (size_t size)
+{
+	cout << "Operator new [] called" << endl;
+	void* ptr = (int*)malloc(sizeof(size));
+	//ptr = nullptr;
+	if (ptr == nullptr)
+	{
+		bad_alloc b1;
+		throw b1;
+	}
+	return ptr;
+}
+void Complex::operator delete[](void* ptr, size_t size)
+{
+	cout << "delete operator [] called" << endl;
+	//free(ptr);
+	//ptr = nullptr;
+	//for(int i=0;i<size;++i)
+		//free(ptr[i]);
 }
 
 void Complex::accept()

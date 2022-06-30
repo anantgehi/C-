@@ -11,6 +11,10 @@ class Complex
 	static int mycounter; //static data member
 public: Complex();//default ctor
 	  Complex(int,int);//paramterized ctor
+	  Complex operator+(const Complex&);
+	  Complex& operator++();//preincrement
+	  Complex operator++(int);//postincrement
+	  bool operator == (const Complex&);//relational operator
 	  void accept();
 	  int getreal()const;
 	  int getimag()const;
@@ -18,6 +22,10 @@ public: Complex();//default ctor
 	  void setimag(int);
 	  void display()const; //const member function //readonly function
 	  static void count_objects(); //static member function 
+	  static void* operator new(size_t);
+	  static void operator delete(void*, size_t);
+	  static void* operator new[](size_t);//new for arrays
+	  static void operator delete[](void*, size_t); //delete for array
 };
 
 extern int count;

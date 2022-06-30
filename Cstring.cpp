@@ -57,6 +57,54 @@ Cstring::Cstring(const Cstring& ss)
 	this->m_pbuff = new char[m_len + 1]; //allocate new memory
 	strcpy(m_pbuff, ss.m_pbuff);// perform deep copy
 }
+//s1=s1
+Cstring& Cstring::operator=(const Cstring&ss)
+{
+	cout << "Assingment operator called" << endl;
+	if (&ss == this) //check for self assignment
+		return *this; //return the same object
+	else
+	{
+		if (m_pbuff)
+			delete[]m_pbuff; //release old memory first
+		m_len = ss.m_len;
+		m_pbuff = new char[m_len + 1];//allocate new memory
+		strcpy(m_pbuff, ss.m_pbuff); //perform deep copy
+		return *this;//return the invoking object
+	}
+}
+//s3=s1+s2;
+
+Cstring Cstring::operator+(const Cstring& ss)
+{
+	Cstring temp;//default ctor
+	cout << "Operator + called" << endl;
+	delete[]temp.m_pbuff;
+	temp.m_len = this->m_len + ss.m_len;
+	temp.m_pbuff = new char[temp.m_len + 1];
+	strcpy(temp.m_pbuff, m_pbuff);
+	strcat(temp.m_pbuff, ss.m_pbuff);
+	return temp;
+}
+Cstring& Cstring::operator+=(const char* country)
+{
+	cout << "Operator += called" << endl;
+	m_len += strlen(country);
+	char* temp = new char[80];
+	strcpy(temp,m_pbuff);
+	delete[]m_pbuff;
+	m_pbuff = new char[m_len + 1];
+	strcpy(m_pbuff, temp);
+	strcat(m_pbuff, country);
+	delete[]temp;
+	temp = nullptr;
+	return *this;
+}
+char& Cstring::operator[](int index)
+{
+	if (index >=0 && index <=m_len)
+		return m_pbuff[index];//return character at index position
+}
 Cstring::~Cstring()
 {
 	cout << "Destructor called" << endl;
