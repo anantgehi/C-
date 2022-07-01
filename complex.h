@@ -2,7 +2,7 @@
 
 //structure padding
 #pragma pack (1)
-
+#include<iostream>
 class Complex
 {
 	int real;//data member
@@ -12,8 +12,9 @@ class Complex
 public: Complex();//default ctor
 	  Complex(int,int);//paramterized ctor
 	  Complex operator+(const Complex&);
-	  Complex& operator++();//preincrement
-	  Complex operator++(int);//postincrement
+	  Complex operator+(int);
+	  //Complex& operator++();//preincrement
+	  //Complex operator++(int);//postincrement
 	  bool operator == (const Complex&);//relational operator
 	  void accept();
 	  int getreal()const;
@@ -26,6 +27,11 @@ public: Complex();//default ctor
 	  static void operator delete(void*, size_t);
 	  static void* operator new[](size_t);//new for arrays
 	  static void operator delete[](void*, size_t); //delete for array
+	  friend Complex operator+(int r, Complex& c);
+	  friend Complex& operator++(Complex &cc);
+	  friend Complex operator++(Complex&,int);
+	  friend std::istream& operator >> (std::istream&,Complex&);
+	  friend std::ostream& operator << (std::ostream&, const Complex&);
 };
 
 extern int count;

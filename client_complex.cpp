@@ -5,7 +5,7 @@
 #include<crtdbg.h>
 #include"complex.h"
 #include<exception>
-
+#include"Smart.h"
 using namespace std;
 
 int main()
@@ -80,6 +80,7 @@ int main()
         //Complex c2(c1);
         //c2.display();
 
+        /*
         try
         {
             Complex* cptr = new Complex;
@@ -89,7 +90,48 @@ int main()
         {
             cout << b.what() << endl;
         }
+        */
+        /*
+        Complex* cptr = new Complex;
+        cptr->accept();
+        (* cptr).display();
+        delete cptr;
+        */
+        //auto_ptr shared_ptr unique_ptr weak_ptr 
+        /*
+        SmartPointer sp1(100,-99);
+        sp1->accept();
+        //(sp1.operator->())->accept();
+        (*sp1).display();
+        //(sp1.operator*()).display();
+        cout << sp1->getreal() << " " << sp1->getimag() << endl;
+        sp1->setimag(999);
+        sp1->display();
+        */
+        Complex c1(10, 3);
+     
+        Complex cc;
+        cin >> c1 >> cc; //(cin.operator>>(c1)).operator >>(cc)
+        //operator >> (operator>>(cin, c1), cc);
+
+        cout << cc<< " "<<c1<<endl;
+        //operator << (operator<<(cout, c1), cc);
+
+        //cc = c1 + 5;//c1.operator+(5);
+        //cc = 5 + c1;//operator+(5,c1);
+        //cc = c1++; //operator++(c1); //c1.operator++()
+        //cc.display();//10 3
+        //c1.display();//11 4
     }
+    // operators which cannot be overloaded!
+    //  ?: sizeof . :: typeid casting_operators
+    // operators which cannot be overloaded globally as friends 
+    // -> = [] () 
+    // sp1->accept(); //(sp1.operator->())->accept();
+    // 5->accept();
+    // friends can help you to overload opertors when the left hand side becomes a bulitin type
+    // friends can also help you to overload >> << 
+    // operators which can overloaded only gloabally are  << >> 
     cout << "Leaks " << _CrtDumpMemoryLeaks() << endl;
     return 0;
 }

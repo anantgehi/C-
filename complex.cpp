@@ -36,6 +36,34 @@ Complex Complex::operator+(const Complex& cc)
 	return Complex(real+cc.real,imag+cc.imag);
 }
 
+Complex Complex::operator+(int r)
+{
+	Complex t;
+	t.real = this->real + r;
+	t.imag = imag;
+	return t;
+}
+Complex operator+(int r, Complex& c)
+{
+	Complex t;
+	t.real=c.real+r;
+	t.imag = c.imag;
+	cout << "Global + operator called" << endl;
+	return t;
+}
+std::istream& operator >> (std::istream& iff, Complex& cc)
+{
+	cout << "Enter real and imag" << endl;
+	iff >> cc.real >> cc.imag;
+	return iff;
+}
+std::ostream& operator << (std::ostream& out , const Complex& cc)
+{
+	out << "Entered  real and imag values are " << endl;
+	out << cc.real << " " << cc.imag << endl;
+	return out;
+}
+/*
 Complex& Complex::operator++()
 {
 	cout << "Pre increment called" << endl;
@@ -43,7 +71,6 @@ Complex& Complex::operator++()
 	++imag;
 	return *this;
 }
-
 Complex Complex::operator++(int)
 {
 	cout << "Post increment called" << endl;
@@ -52,7 +79,22 @@ Complex Complex::operator++(int)
 	this->imag++;
 	return temp;
 }
-
+*/
+Complex& operator++(Complex &cc)
+{
+	cout << "Pre increment called globally" << endl;
+	++cc.real;
+	++cc.imag;
+	return cc;
+}
+Complex operator++(Complex &cc,int)
+{
+	cout << "Post increment called globally" << endl;
+	Complex temp = cc;
+	cc.real++;
+	cc.imag++;
+	return temp;
+}
 bool Complex::operator==(const Complex&cc)
 {
 	cout << "Operator == called" << endl;

@@ -25,7 +25,13 @@ Cstring::Cstring(char ch, int l)
 	memset(m_pbuff, ch, m_len);
 	m_pbuff[m_len] = '\0';
 }
-
+Cstring::Cstring(Cstring&& ss)
+{
+	//cout << "Move ctor called" << endl;
+	m_len = ss.m_len;
+	m_pbuff = ss.m_pbuff;
+	ss.m_pbuff = nullptr;
+}
 void Cstring::displaystring()
 {
 	cout << m_pbuff << " " << m_len << endl;
@@ -42,7 +48,23 @@ void Cstring::acceptstring()
 	cin.getline(m_pbuff, 80, '\n');
 	m_len = strlen(m_pbuff);
 }
-
+istream& operator >> (istream& iff, Cstring& ss)
+{
+	if (ss.m_pbuff)
+		delete[]ss.m_pbuff;	
+	ss.m_pbuff = new char[80]; //allocate new memory
+	cout << "Enter the string " << endl;
+	//cin >> m_pbuff;
+	cin.getline(ss.m_pbuff, 80, '\n');
+	ss.m_len = strlen(ss.m_pbuff);
+	return iff;
+}
+ostream& operator << (ostream& out, const Cstring& ss)
+{
+	cout << endl;
+	out << "Entered string and length is : " << ss.m_pbuff << " " << ss.m_len << endl;
+	return out;
+}
 void Cstring::release()
 {
 	if (m_pbuff)
@@ -52,7 +74,7 @@ void Cstring::release()
 //Cstring s4(s1);
 Cstring::Cstring(const Cstring& ss)
 {
-	cout << "Copy ctor called" << endl;
+	//cout << "Copy ctor called" << endl;
 	this->m_len = ss.m_len;
 	this->m_pbuff = new char[m_len + 1]; //allocate new memory
 	strcpy(m_pbuff, ss.m_pbuff);// perform deep copy
@@ -60,7 +82,7 @@ Cstring::Cstring(const Cstring& ss)
 //s1=s1
 Cstring& Cstring::operator=(const Cstring&ss)
 {
-	cout << "Assingment operator called" << endl;
+	//cout << "Assingment operator called" << endl;
 	if (&ss == this) //check for self assignment
 		return *this; //return the same object
 	else
@@ -74,7 +96,21 @@ Cstring& Cstring::operator=(const Cstring&ss)
 	}
 }
 //s3=s1+s2;
-
+Cstring& Cstring::operator=(Cstring&& ss)
+{
+	//cout << "move Assingment operator called" << endl;
+	if (&ss == this) //check for self assignment
+		return *this; //return the same object
+	else
+	{
+		if (m_pbuff)
+			delete[]m_pbuff; //release old memory first
+		m_len = ss.m_len;
+		m_pbuff = ss.m_pbuff; //shallow copy
+		ss.m_pbuff = nullptr;//set to pointer to nullptr
+		return *this;//return the invoking object
+	}
+}
 Cstring Cstring::operator+(const Cstring& ss)
 {
 	Cstring temp;//default ctor
@@ -107,7 +143,7 @@ char& Cstring::operator[](int index)
 }
 Cstring::~Cstring()
 {
-	cout << "Destructor called" << endl;
+	//cout << "Destructor called" << endl;
 	if (m_pbuff)
 		delete[]m_pbuff;
 	m_pbuff = nullptr;
