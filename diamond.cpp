@@ -19,7 +19,7 @@ public: Base() :x(0) { cout << "default ctor Base" << endl; }
 				cout << "dest Base" << endl; 
 		}
 };
-class Derived1 :public Base
+class Derived1 :public virtual Base
 {
 	int y;
 public: Derived1(int xx,int yy) :Base(xx),y(yy) 
@@ -36,7 +36,7 @@ public: Derived1(int xx,int yy) :Base(xx),y(yy)
 			cout << "dest Derived1" << endl; 
 	    }
 };
-class Derived2 : public Base
+class Derived2 : public virtual Base
 {
 	int z;
 public: Derived2(int xx, int zz) :Base(xx), z(zz)
@@ -55,7 +55,7 @@ public: Derived2(int xx, int zz) :Base(xx), z(zz)
 class Derived :public Derived1, public Derived2
 {
 	int a;
-public: Derived(int aa,int xx, int yy,int zz) :Derived1(xx,yy),Derived2(xx,zz)
+public: Derived(int aa,int xx, int yy,int zz) :Derived1(xx,yy),Derived2(xx,zz),Base(xx)
 		{
 			cout << "ctor Derived" << endl;
 			a = aa;

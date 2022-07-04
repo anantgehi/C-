@@ -54,8 +54,8 @@ istream& operator >> (istream& iff, Cstring& ss)
 		delete[]ss.m_pbuff;	
 	ss.m_pbuff = new char[80]; //allocate new memory
 	cout << "Enter the string " << endl;
-	//cin >> m_pbuff;
-	cin.getline(ss.m_pbuff, 80, '\n');
+	cin >> ss.m_pbuff;
+	//cin.getline(ss.m_pbuff, 80, '\n');
 	ss.m_len = strlen(ss.m_pbuff);
 	return iff;
 }

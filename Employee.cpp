@@ -17,7 +17,10 @@ Employee::Employee(int id, const char* nm, int dd, int mm, int yy):empid(id),nam
 }
 void Employee::accept()
 {
-
+	cout << "Enter empid " << endl;
+	cin >> empid;
+	cin >> name;
+	doj.acceptdate();
 }
 void Employee::show()
 {

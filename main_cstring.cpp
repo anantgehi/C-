@@ -8,7 +8,8 @@
 #include"Date.h"
 #include"smart.h"
 #include"Employee.h"
-
+#include"Wage.h"
+#include"Sales.h"
 using namespace std;
 
 //Note: collect by reference and return by reference to avoid calls to copy ctor
@@ -31,9 +32,15 @@ int& function(int& x)
 int main()
 {
 	{
-		Employee e1(1000,"akshay",1,7,2022);
+		SalesPerson sp1(1000,"akshay",1,7,2022,8,5000,4.5,7000);
 		//cout << sizeof(e1) << endl;
-		e1.show();
+		sp1.show();
+		cout << "Salary is " << sp1.computesal() << endl;
+
+		SalesPerson sp2;
+		sp2.accept();
+		sp2.show();
+		cout << "Salary is " << sp2.computesal() << endl;
 
 		//Cstring s1;
 		//cin >> s1; //operator >> (cin,s1);
